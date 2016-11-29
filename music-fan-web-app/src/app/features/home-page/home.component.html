@@ -7,6 +7,4 @@
     {{artist.fullName}}
   </li>
 </ul>
-<div *ngIf="selectedArtist">
-  <h2>Welcome to {{selectedArtist.fullName}} facts page!</h2>
-</div>
+<artist-detail [artist]="selectedArtist"></artist-detail>
