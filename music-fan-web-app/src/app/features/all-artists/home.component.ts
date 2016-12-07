@@ -5,7 +5,7 @@ import { Artist } from '../artist/artist';
 import { ArtistService } from '../artist/service/artist.service';
 
 @Component({
-  selector: 'music-fan-app-root',
+  selector: 'music-fan-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   providers: [ArtistService]

@@ -1,7 +1,4 @@
-<h1>
-  {{title}}
-</h1>
-<h2>Current Artists</h2>
+<h2>All Artists</h2>
 <ul class="artists">
   <li *ngFor="let artist of artists" [class.selected]="artist === selectedArtist" (click)="onSelect(artist)">
     {{artist.fullName}}
