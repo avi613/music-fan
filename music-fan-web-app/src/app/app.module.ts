@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { HomePageComponent } from './features/home-page/home.component';
-import {ArtistDetailComponent} from './features/artist-detail/artist-detail.component';
+import { ArtistDetailComponent } from './features/artist-detail/artist-detail.component';
 
 @NgModule({
   declarations: [
