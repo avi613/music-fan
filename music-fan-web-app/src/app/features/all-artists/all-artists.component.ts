@@ -6,11 +6,11 @@ import { ArtistService } from '../artist/service/artist.service';
 
 @Component({
   selector: 'music-fan-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  templateUrl: './all-artists.component.html',
+  styleUrls: ['./all-artists.component.css'],
   providers: [ArtistService]
 })
-export class HomePageComponent implements OnInit {
+export class AllArtistsComponent implements OnInit {
   title = 'Music Fan';
   artists: Artist[];
   selectedArtist: Artist;

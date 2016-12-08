@@ -5,13 +5,15 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { HomePageComponent } from './features/all-artists/home.component';
+import { HomePageComponent } from './features/home/home.component'
+import { AllArtistsComponent } from './features/all-artists/all-artists.component';
 import { ArtistFanPageComponent } from './features/artist-fan-page/artist-fan-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
+    AllArtistsComponent,
     ArtistFanPageComponent
   ],
   imports: [
@@ -19,8 +21,21 @@ import { ArtistFanPageComponent } from './features/artist-fan-page/artist-fan-pa
     FormsModule,
     RouterModule.forRoot([
       {
-        path: 'all-artists',
+        path: 'home',
         component: HomePageComponent
+      },
+      {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'all-artists',
+        component: AllArtistsComponent
+      },
+      {
+        path: 'artist-page/:id',
+        component: ArtistFanPageComponent
       }
     ]),
     HttpModule

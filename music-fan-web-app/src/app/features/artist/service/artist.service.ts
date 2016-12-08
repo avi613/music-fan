@@ -8,4 +8,9 @@ export class ArtistService {
   getArtists(): Promise<Artist[]> {
     return Promise.resolve(ARTISTS);
   }
+
+  getArtist(id: number): Promise<Artist> {
+    return this.getArtists()
+      .then(artists => artists.find(artist => artist.id === id))
+  }
 }
