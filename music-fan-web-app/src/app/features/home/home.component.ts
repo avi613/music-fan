@@ -6,6 +6,7 @@ import { ArtistService } from '../artist/service/artist.service'
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
   providers: [ArtistService]
 })
 export class HomePageComponent implements OnInit {

@@ -10,7 +10,8 @@ import { ArtistService } from '../artist/service/artist.service'
 @Component({
   selector: 'artist-fan-page',
   templateUrl: './artist-fan-page.component.html',
-  providers: [ArtistService]
+  providers: [ArtistService],
+  styleUrls: ['./artist-fan-page.component.css']
 })
 export class ArtistFanPageComponent implements OnInit {
   @Input()

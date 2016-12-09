@@ -4,4 +4,9 @@
     {{artist.fullName}}
   </li>
 </ul>
-<artist-fan-page [artist]="selectedArtist"></artist-fan-page>
+<div *ngIf="selectedArtist">
+  <h2>
+    More about {{selectedArtist.fullName | uppercase}}
+  </h2>
+  <button (click)="goToFanPage()">Go To Fan's Page</button>
+</div>
