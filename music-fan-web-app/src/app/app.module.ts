@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms'
 
 import { HttpModule } from '@angular/http'
 
+// imports for loading and configuring the in-memory web api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api'
+import { InMemoryDataService } from './backend/in-memory-data.service'
+
 import { AppComponent } from './app.component'
 import { HomePageComponent } from './features/home/home.component'
 import { AllArtistsComponent } from './features/all-artists/all-artists.component'
@@ -18,7 +22,8 @@ import { AppRoutingModule } from './app-routing.module'
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
   declarations: [
     AppComponent,

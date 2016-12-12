@@ -1,4 +1,11 @@
 <h2>All Artists</h2>
+<div>
+  <label>Artist name:</label><input #artistName />
+  <label>Artist picture:</label><input #picture />
+  <button (click)="add(artistName.value, picture.value); artistName.value=''; picture.value='' ">
+    Add
+  </button>
+</div>
 <ul class="artists">
   <li *ngFor="let artist of artists" [class.selected]="artist === selectedArtist" (click)="onSelect(artist)">
     {{artist.fullName}}

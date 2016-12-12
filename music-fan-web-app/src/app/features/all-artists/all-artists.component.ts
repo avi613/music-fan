@@ -32,4 +32,14 @@ export class AllArtistsComponent implements OnInit {
   goToFanPage(): void {
     this.router.navigate(['/artist-page', this.selectedArtist.id])
   }
+
+  add(name: string, picture: string): void {
+    name = name.trim()
+    if (!name) return
+    this.artistService.create(name, picture)
+      .then(artist => {
+        this.artists.push(artist)
+        this.selectedArtist = null
+      })
+  }
 }
