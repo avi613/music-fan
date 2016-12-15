@@ -1,4 +1,4 @@
-package org.musicfan.artist.rest;
+package org.musicfan.artist.pillar;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,13 +28,13 @@ public class ArtistControllerIT {
 
     @Before
     public void setUp() throws MalformedURLException {
-        baseUrl = new URL("http://localhost:" + port + "/artists");
+        baseUrl = new URL("http://localhost:" + port + "/music-fan/artists");
     }
 
     @Test
     public void should_get_all_artists() {
         ResponseEntity<String> response = restTemplate.getForEntity(baseUrl.toString(), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo("[{\"id\":\"1\",\"name\":\"Serges Gainsbourg\"},{\"id\":\"2\",\"name\":\"Georges Brassens\"},{\"id\":\"3\",\"name\":\"Edit Piaf\"},{\"id\":\"4\",\"name\":\"Neil Young\"},{\"id\":\"5\",\"name\":\"Jimi Hendrix\"}]");
+        assertThat(response.getBody()).isEqualTo("[{\"id\":\"ID\",\"fullName\":\"full name\",\"pathToMainPicture\":\"path to main picture\"}]");
     }
 }
