@@ -1,6 +1,5 @@
 package org.musicfan.artist.pillar;
 
-import com.google.common.collect.ImmutableList;
 import org.musicfan.artist.Artist;
 
 import java.util.List;

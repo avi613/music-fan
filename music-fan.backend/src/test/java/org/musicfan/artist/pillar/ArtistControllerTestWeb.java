@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.musicfan.artist.Artist;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

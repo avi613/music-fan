@@ -1,14 +1,18 @@
 package org.musicfan.artist.pillar;
 
-import com.google.common.collect.ImmutableList;
 import org.musicfan.artist.Artist;
+import org.musicfan.artist.pillar.mockDB.MockDB;
 
 import java.util.List;
 
 public class ArtistRepository {
+    private MockDB mockDB;
+
+    public ArtistRepository(MockDB mockDB) {
+        this.mockDB = mockDB;
+    }
+
     public List<Artist> getAllArtists() {
-        return ImmutableList.of(
-                new Artist("ID", "full name", "path to main picture")
-        );
+        return mockDB.getAllArtists();
     }
 }
