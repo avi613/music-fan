@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MockDB {
@@ -32,5 +33,15 @@ public class MockDB {
                         rs.getString("id"),
                         rs.getNString("full_name"),
                         rs.getNString("path_to_main_picture")));
+    }
+
+    // TODO: return an Optional<Artist>
+    public Artist getArtistById(String id) {
+        return jdbcTemplate.query("SELECT * FROM artists where id = ?", new Object[]{id},
+                (rs, rowNum) -> new Artist(
+                        rs.getString("id"),
+                        rs.getNString("full_name"),
+                        rs.getNString("path_to_main_picture")))
+                .get(0);
     }
 }

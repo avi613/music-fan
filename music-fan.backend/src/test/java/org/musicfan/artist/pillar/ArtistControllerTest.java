@@ -16,4 +16,16 @@ public class ArtistControllerTest {
         // then
         verify(artistService, times(1)).getAllArtists();
     }
+
+    @Test
+    public void should_invoke_artistService_on_getArtistById() {
+        // given
+        String id = "artist_id";
+
+        // when
+        artistController.getArtistById(id);
+
+        // then
+        verify(artistService, times(1)).getArtistById(id);
+    }
 }

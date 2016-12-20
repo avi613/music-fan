@@ -1,5 +1,8 @@
 package org.musicfan.artist.pillar;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,12 +35,16 @@ public class ArtistControllerIT {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private ObjectMapper mapper = new ObjectMapper();
+
+    private Artist mockArtist = new Artist("ID", "full name", "path to main picture");
+    private List<Artist> mockArtistList = ImmutableList.of(mockArtist);
+
     @Before
     public void setUp() throws MalformedURLException {
         baseUrl = new URL("http://localhost:" + port + "/music-fan/artists");
 
-        jdbcTemplate.execute("DROP TABLE artists IF EXISTS");
-        jdbcTemplate.execute("CREATE TABLE artists(id VARCHAR(2), full_name VARCHAR(255), path_to_main_picture VARCHAR(255))");
+        jdbcTemplate.execute("TRUNCATE TABLE artists");
         jdbcTemplate.execute("INSERT INTO artists(id, full_name, path_to_main_picture) VALUES ('ID','full name','path to main picture')");
         jdbcTemplate.query("SELECT * FROM artists",
                 (rs, rowNum) -> new Artist(
@@ -47,9 +55,16 @@ public class ArtistControllerIT {
     }
 
     @Test
-    public void should_get_all_artists() {
+    public void should_get_all_artists() throws JsonProcessingException {
         ResponseEntity<String> response = restTemplate.getForEntity(baseUrl.toString(), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo("[{\"id\":\"ID\",\"fullName\":\"full name\",\"pathToMainPicture\":\"path to main picture\"}]");
+        assertThat(response.getBody()).isEqualTo(mapper.writeValueAsString(mockArtistList));
+    }
+
+    @Test
+    public void should_get_artist_by_id() throws JsonProcessingException {
+        ResponseEntity<String> response = restTemplate.getForEntity(baseUrl.toString() + "/ID", String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo(mapper.writeValueAsString(mockArtist));
     }
 }

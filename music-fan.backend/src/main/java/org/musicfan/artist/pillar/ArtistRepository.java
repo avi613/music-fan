@@ -15,4 +15,9 @@ public class ArtistRepository {
     public List<Artist> getAllArtists() {
         return mockDB.getAllArtists();
     }
+
+    // TODO: manage orElseThrow
+    public Artist getArtistById(String id) {
+        return mockDB.getArtistById(id);
+    }
 }
