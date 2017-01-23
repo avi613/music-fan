@@ -1,6 +1,7 @@
 package org.musicfan.artist.pillar.mockDB;
 
 import org.musicfan.artist.Artist;
+import org.musicfan.artist.pillar.exception.ArtistNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -41,6 +42,8 @@ public class MockDB {
                         rs.getString("id"),
                         rs.getNString("full_name"),
                         rs.getNString("path_to_main_picture")))
-                .get(0);
+                .stream()
+                .findAny()
+                .orElseThrow(() -> new ArtistNotFoundException("Artist with id \'" + id + "\' not found"));
     }
 }

@@ -61,6 +61,14 @@ public class ArtistControllerIT {
         assertThat(response.getBody()).isEqualTo(jsonOf(mockArtist));
     }
 
+    @Test
+    public void should_get_an_artist_not_found_exception() {
+        ResponseEntity<String> response = restTemplate.getForEntity(baseUrl.toString() + "/WAT", String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(response.getBody()).contains("\"message\":\"Artist with id \'WAT\' not found\"");
+    }
+
     private void setUpBaseUrl() throws MalformedURLException {
         baseUrl = new URL("http://localhost:" + port + "/music-fan/artists");
     }
