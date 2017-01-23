@@ -2,7 +2,6 @@ package org.musicfan.artist.pillar;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import static com.google.common.collect.ImmutableList.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -28,23 +28,45 @@ public class ArtistControllerIT {
     @LocalServerPort
     private int port;
     private URL baseUrl;
-
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private ObjectMapper mapper = new ObjectMapper();
-
     private Artist mockArtist = new Artist("ID", "full name", "path to main picture");
-    private List<Artist> mockArtistList = ImmutableList.of(mockArtist);
+    private List<Artist> mockArtists = of(mockArtist);
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws MalformedURLException {
-        baseUrl = new URL("http://localhost:" + port + "/music-fan/artists");
+        setUpBaseUrl();
+        setUpDB();
+    }
 
-        jdbcTemplate.execute("TRUNCATE TABLE artists");
+    @Test
+    public void should_get_all_artists() throws JsonProcessingException {
+        ResponseEntity<String> response = restTemplate.getForEntity(baseUrl.toString(), String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo(jsonOf(mockArtists));
+    }
+
+    @Test
+    public void should_get_artist_by_id() throws JsonProcessingException {
+        ResponseEntity<String> response = restTemplate.getForEntity(baseUrl.toString() + "/ID", String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo(jsonOf(mockArtist));
+    }
+
+    private void setUpBaseUrl() throws MalformedURLException {
+        baseUrl = new URL("http://localhost:" + port + "/music-fan/artists");
+    }
+
+    private void setUpDB() {
+        jdbcTemplate.execute("TRUNCATE TABLE ARTISTS");
         jdbcTemplate.execute("INSERT INTO artists(id, full_name, path_to_main_picture) VALUES ('ID','full name','path to main picture')");
         jdbcTemplate.query("SELECT * FROM artists",
                 (rs, rowNum) -> new Artist(
@@ -54,17 +76,7 @@ public class ArtistControllerIT {
                 .forEach(artist -> System.out.println("initiated: " + artist));
     }
 
-    @Test
-    public void should_get_all_artists() throws JsonProcessingException {
-        ResponseEntity<String> response = restTemplate.getForEntity(baseUrl.toString(), String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(mapper.writeValueAsString(mockArtistList));
-    }
-
-    @Test
-    public void should_get_artist_by_id() throws JsonProcessingException {
-        ResponseEntity<String> response = restTemplate.getForEntity(baseUrl.toString() + "/ID", String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(mapper.writeValueAsString(mockArtist));
+    private String jsonOf(Object response) throws JsonProcessingException {
+        return mapper.writeValueAsString(response);
     }
 }

@@ -22,7 +22,7 @@ public class ArtistController {
         return artistService.getAllArtists();
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping("{id}")
     public Artist getArtistById(@PathVariable("id") String id) {
         return artistService.getArtistById(id);
     }

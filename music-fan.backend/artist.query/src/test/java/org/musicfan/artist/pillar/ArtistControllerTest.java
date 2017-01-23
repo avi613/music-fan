@@ -2,14 +2,16 @@ package org.musicfan.artist.pillar;
 
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ArtistControllerTest {
     private ArtistService artistService = mock(ArtistService.class);
     private ArtistController artistController = new ArtistController(artistService);
 
     @Test
-    public void should_invoke_artistService_on_getAllArtists() {
+    public void should_invoke_artist_service_on_getAllArtists() {
         // when
         artistController.getAllArtists();
 
@@ -18,14 +20,14 @@ public class ArtistControllerTest {
     }
 
     @Test
-    public void should_invoke_artistService_on_getArtistById() {
+    public void should_invoke_artist_service_on_getArtistById() {
         // given
-        String id = "artist_id";
+        String artistId = "artist_id";
 
         // when
-        artistController.getArtistById(id);
+        artistController.getArtistById(artistId);
 
         // then
-        verify(artistService, times(1)).getArtistById(id);
+        verify(artistService, times(1)).getArtistById(artistId);
     }
 }

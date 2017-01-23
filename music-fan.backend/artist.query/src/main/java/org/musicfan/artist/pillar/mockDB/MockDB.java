@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class MockDB {
@@ -28,7 +27,7 @@ public class MockDB {
     }
 
     public List<Artist> getAllArtists() {
-        return jdbcTemplate.query("SELECT * FROM artists",
+        return jdbcTemplate.query("SELECT * FROM ARTISTS",
                 (rs, rowNum) -> new Artist(
                         rs.getString("id"),
                         rs.getNString("full_name"),
